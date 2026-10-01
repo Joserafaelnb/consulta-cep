@@ -1,6 +1,9 @@
 import logging
 
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query, Request
+
+from app.limiter import limiter
+
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
@@ -20,7 +23,10 @@ router = APIRouter(prefix="/consultas", tags=["Consultas"])
 
 #esta rota faz uma consulta com o viacerta, utiliza o schema para validar o cep, e retorna um json com o formato esperado tratando erros
 @router.post("", response_model=ConsultaResponse)
-async def consultar_cep(dados: ConsultaRequest, db: Session = Depends(get_db)):
+@limiter.limit("10/minute")
+async def consultar_cep(
+    request: Request, dados: ConsultaRequest, db: Session = Depends(get_db)
+):
     try:
         endereco = await buscar_endereco(dados.cep)
     except CepNaoEncontradoError:

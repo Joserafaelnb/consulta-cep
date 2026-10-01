@@ -1,6 +1,8 @@
 from datetime import datetime
-import re
+
 from pydantic import BaseModel, ConfigDict, Field, field_validator
+
+import re
 
 
 #classe de regra de negocio responsavel por fazer uma requisição e validar os dados
