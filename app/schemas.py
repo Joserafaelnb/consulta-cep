@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 #classe de regra de negocio responsavel por fazer uma requisição e validar os dados
@@ -18,8 +18,10 @@ class ConsultaRequest(BaseModel):
 
 #classe de regra de negocio responsavel por entregar uma requisição no formato correto
 class ConsultaResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)  # <-- ESSENCIAL PARA LER DO SQLALCHEMY!
+
     cep: str
     logradouro: str
     bairro: str
     cidade: str
-    dataConsulta: datetime
+    data_consulta: datetime = Field(serialization_alias="dataConsulta")
