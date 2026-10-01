@@ -1,5 +1,6 @@
 from sqlalchemy import select
 from sqlalchemy.orm import Session
+from sqlalchemy.exc import SQLAlchemyError
 
 from app.models import Consulta
 
@@ -16,7 +17,11 @@ def listar_consultas(db: Session, limite: int = 50, offset: int = 0) -> list[Con
 def salvar_consulta(db: Session, endereco: dict) -> Consulta:
     consulta = Consulta(**endereco)
     db.add(consulta)
-    db.commit()
+    try:
+        db.commit()
+    except SQLAlchemyError: #desfaz a transação se for encontrado algum erro
+        db.rollback()
+        raise
     db.refresh(consulta)
     return consulta
 
