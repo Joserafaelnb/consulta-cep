@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.repository import listar_consultas, salvar_consulta
-from app.schemas import ConsultaRequest, ConsultaResponse
+from app.schemas import ConsultaRequest, ConsultaResponse, HistoricoResponse
 from app.services.viacep import (
     CepNaoEncontradoError,
     ViaCepIndisponivelError,
@@ -52,7 +52,7 @@ async def consultar_cep(
 
 
 #essa rota retorna dados de tabelas salvas no banco 
-@router.get("", response_model=list[ConsultaResponse])
+@router.get("", response_model=list[HistoricoResponse])
 def listar_historico(
     limite: int = Query(50, ge=1, le=200),
     offset: int = Query(0, ge=0),

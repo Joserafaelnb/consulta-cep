@@ -30,3 +30,7 @@ class ConsultaResponse(BaseModel):
     bairro: str
     cidade: str
     data_consulta: datetime = Field(serialization_alias="dataConsulta")
+
+
+class HistoricoResponse(ConsultaResponse):
+    id: int
