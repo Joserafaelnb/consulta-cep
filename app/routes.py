@@ -1,8 +1,8 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 
 from app.database import get_db
-from app.repository import salvar_consulta
+from app.repository import listar_consultas, salvar_consulta
 from app.schemas import ConsultaRequest, ConsultaResponse
 from app.services.viacep import (
     CepNaoEncontradoError,
@@ -25,3 +25,13 @@ async def consultar_cep(dados: ConsultaRequest, db: Session = Depends(get_db)):
         )
 
     return salvar_consulta(db, endereco)
+
+
+#essa rota retorna dados de tabelas salvas no banco 
+@router.get("", response_model=list[ConsultaResponse])
+def listar_historico(
+    limite: int = Query(50, ge=1, le=200),
+    offset: int = Query(0, ge=0),
+    db: Session = Depends(get_db),
+):
+    return listar_consultas(db, limite, offset)

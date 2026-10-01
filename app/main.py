@@ -15,7 +15,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Consulta de CEP", lifespan=lifespan)
 app.include_router(router)
-
+    
 
 @app.get("/health")
 def health():
