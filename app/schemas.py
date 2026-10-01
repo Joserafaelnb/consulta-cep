@@ -2,18 +2,23 @@ from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
+import re
+
 
 #classe de regra de negocio responsavel por fazer uma requisição e validar os dados
+CEP_REGEX = re.compile(r"[0-9]{5}-?[0-9]{3}") #so aceit numeros e o hifen so pode estar em uma posição 
+
+
 class ConsultaRequest(BaseModel):
     cep: str
 
     @field_validator("cep")
     @classmethod
     def validar_cep(cls, valor: str) -> str:
-        apenas_digitos = valor.replace("-", "").strip()
-        if not (apenas_digitos.isdigit() and len(apenas_digitos) == 8):
-            raise ValueError("CEP deve conter exatamente 8 dígitos numéricos")
-        return apenas_digitos
+        valor = valor.strip()
+        if not CEP_REGEX.fullmatch(valor):
+            raise ValueError("CEP deve estar no formato 12345678 ou 12345-678")
+        return valor.replace("-", "")
 
 
 #classe de regra de negocio responsavel por entregar uma requisição no formato correto
