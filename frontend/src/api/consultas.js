@@ -1,3 +1,5 @@
+import { lerConsentimento } from '../utils/consentimento'
+
 const BASE_URL = '/api/consultas'
 
 async function requisitar(url, opcoes) {
@@ -31,13 +33,25 @@ async function requisitar(url, opcoes) {
 }
 
 export function consultarCep(cep) {
+  const headers = { 'Content-Type': 'application/json' }
+  if (lerConsentimento() === 'aceito') {
+    headers['X-Cookie-Consent'] = 'aceito'
+  }
   return requisitar(BASE_URL, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers,
     body: JSON.stringify({ cep }),
   })
 }
 
-export function listarHistorico(limite = 50) {
-  return requisitar(`${BASE_URL}?limite=${limite}`)
+export function listarHistorico(limite = 50, offset = 0) {
+  return requisitar(`${BASE_URL}?limite=${limite}&offset=${offset}`)
+}
+
+export function listarMinhas(pagina = 1, tamanho = 5) {
+  return requisitar(`${BASE_URL}/minhas?pagina=${pagina}&tamanho=${tamanho}`)
+}
+
+export async function revogarCookie() {
+  await fetch(`${BASE_URL}/cookie`, { method: 'DELETE' })
 }

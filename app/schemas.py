@@ -34,3 +34,10 @@ class ConsultaResponse(BaseModel):
 
 class HistoricoResponse(ConsultaResponse):
     id: int
+
+
+class PaginaHistoricoResponse(BaseModel):
+    itens: list[HistoricoResponse]
+    total: int
+    pagina: int
+    tamanho: int

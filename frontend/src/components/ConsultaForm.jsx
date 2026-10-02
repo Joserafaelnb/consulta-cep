@@ -11,6 +11,7 @@ export default function ConsultaForm({ onConsultar }) {
     setCarregando(true)
     try {
       await onConsultar(cep)
+      setCep('')   // só limpa se a consulta deu certo
     } catch (e) {
       setErro(e.message)
     } finally {
