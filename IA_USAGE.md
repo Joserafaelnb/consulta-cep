@@ -1,6 +1,6 @@
 # Uso de Inteligência Artificial
 
-> Resumo : **a IA gerou a maior parte do código; o meu trabalho foi
+> Resumo : A IA gerou a maior parte do código; o meu trabalho foi
 > planejar com ela, executar, testar, estudar cada trecho até conseguir
 > entender completamente a lógica, organizar o Git e documentar.
 > usei do desafio também para recordar alguns conceitos da stack.
@@ -13,7 +13,7 @@
 | Qua 30/09 | Consulta ao ViaCEP, persistência, histórico, tratamento de erros, validação estrita do CEP |
 | Qui 01/10 | Segurança, frontend em React, testes automatizados, README e este documento |
 
-Tempo total aproximado gasto: ** 12h, contando estudo**.
+Tempo total aproximado gasto:  14h, contando estudo.
 Distribuição: **60% estudando/entendendo o código, 25% executando e testando, 15% Git/documentação**.
 
 ## 1. Ferramentas utilizadas
