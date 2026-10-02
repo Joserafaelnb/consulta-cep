@@ -1,9 +1,9 @@
 import { formatarData } from '../utils/formatarData'
 
-export default function HistoricoTabela({ consultas, erro }) {
+export default function HistoricoTabela({ titulo, consultas, erro }) {
   return (
     <section className="card">
-      <h2>Histórico</h2>
+      <h2>{titulo}</h2>
       {erro && (
         <p role="alert" className="erro">
           {erro}

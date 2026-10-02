@@ -14,4 +14,5 @@ class Consulta(Base):
     logradouro: Mapped[str]
     bairro: Mapped[str]
     cidade: Mapped[str]
+    visitor_id: Mapped[str] = mapped_column(String(36), index=True)
     data_consulta: Mapped[datetime] = mapped_column(default=datetime.now)
